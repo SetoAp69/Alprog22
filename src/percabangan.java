@@ -10,12 +10,13 @@ public class percabangan {
         nilai= input.nextInt();
         if (nilai>=60){
             keterangan="Lulus";
-            System.out.println(nama+""+keterangan);
+            System.out.println(nama+" "+keterangan);
 
         }
         else{
             keterangan="Tidak Lulus";
             System.out.println(nama+" "+keterangan);
+            //x
         }
 
 
