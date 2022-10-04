@@ -2,14 +2,29 @@ package Project;
 import java.util.Scanner;
 
 public class Siakad {
+    static Mahasiswa[]mahasiswa=new Mahasiswa[1000];
+    static int jumlahData=0;
+    static Scanner input=new Scanner(System.in);
     public static void tambahData(){
         System.out.println("Silahkan Tambah Data");
+        System.out.println("NIM : ");
+        int nim=input.nextInt();
+        System.out.println("Nama : ");
+        String nama=input.next();
+        mahasiswa[jumlahData]=new Mahasiswa();
+        mahasiswa[jumlahData].setNama(nama);
+        mahasiswa[jumlahData].setNIM(nim);
+        jumlahData++;
+
     }
     public static void lihatData(){
         System.out.println("Berikut data anda");
+        for(int i=0;i<jumlahData;i++){
+            System.out.println(mahasiswa[i].getNim()+" "+mahasiswa[i].getNama());
+        }
     }
     public static void main(String[] args) {
-        Scanner input=new Scanner(System.in);
+
         /*System.out.println("Menu Siakad");
         System.out.println("1. Tambah Data ");
         System.out.println("2. Lihat Data ");
