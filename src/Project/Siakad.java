@@ -252,7 +252,6 @@ public class Siakad {
         sorted=true;
 
     }
-
     public void InsertionSort(){
         for(int m=1;m<jumlahData;++m){
             Mahasiswa key=mahasiswa[m];
@@ -264,7 +263,6 @@ public class Siakad {
            mahasiswa[l+1]=key;
         }
         sorted=true;
-
     }
     public void bubbleSort(){
         boolean noSwap;
@@ -330,7 +328,7 @@ public class Siakad {
 
     }
     public static void linearSearch(){
-        System.out.println("Masukkan Nama/NIM : ");
+        System.out.println("Masukkan Nama : ");
         String filterValue=input.next();
         boolean found=false;
         for(int i=0; i<jumlahData; i++){
@@ -439,7 +437,6 @@ public class Siakad {
     public static void uas(){
         if(jumlahData==0){ //O(1)
             System.out.println("Tidak ada data");//O(1)
-
         }
         else{
             int jarak=jumlahData; //O(1)
@@ -451,21 +448,17 @@ public class Siakad {
                     jarak=1;
                     urut=1;
                 }
-                for(int i=0;i+jarak<jumlahData;i++){ //O
-                    if(mahasiswa[i].getNim()>mahasiswa[i+jarak].getNim()){
-                        Mahasiswa temp;
-                        temp=mahasiswa[i];
-                        mahasiswa[i]=mahasiswa[i+jarak];
-                        mahasiswa[i+jarak]=temp;
-                        urut=0;
+                for(int i=0;i+jarak<jumlahData;i++){ //O(n)
+                    if(mahasiswa[i].getNim()>mahasiswa[i+jarak].getNim()){ //O(1)
+                        Mahasiswa temp; //O(1)
+                        temp=mahasiswa[i];//O(1)
+                        mahasiswa[i]=mahasiswa[i+jarak];//O(1)
+                        mahasiswa[i+jarak]=temp;//O(1)
+                        urut=0;//O(1)
                     }
-
                 }
-
             }
-            System.out.println("Data telah diurutkan Silahkan tampilkan data");
-
-
+            System.out.println("Data telah diurutkan Silahkan tampilkan data");//O(1)
 
         }
     }
