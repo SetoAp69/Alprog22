@@ -1,7 +1,7 @@
 package Project;
 import java.util.Scanner;
 
-public class Siakad {
+public class SiakadLoopProblem {
     static Mahasiswa[]mahasiswa=new Mahasiswa[1000];
     /*static Mahasiswa x=new Mahasiswa("a",2);
     static Mahasiswa y=new Mahasiswa("b",4);
@@ -16,19 +16,48 @@ public class Siakad {
     static boolean sorted=false;
     static Scanner input=new Scanner(System.in);
     public static void tambahData(){
-        Siakad siakad=new Siakad();
-        String konfirmasi = "";
-        while (!konfirmasi.equalsIgnoreCase("n")){
+        SiakadLoopProblem siakad=new SiakadLoopProblem();
+        String konfirmasi;
+        do{
             System.out.println("\nSilahkan Tambah Data");
             System.out.print("NIM : ");
             String stringNim=input.next();
-            if(isNumeric(stringNim)){
-                int nim=Integer.parseInt(stringNim);
-                /*if(binarySearch(mahasiswa,stringNim,0,jumlahData-1)!=null){ //binary search lebih optimal tapi data auto sorted
-                    System.out.println("Nim sudah terdaftar silahkan masukan Nim lain!");
-                }*/
-                if(linearNimSearch(nim)!=null){
-                    System.out.println("Nim sudah terdaftar silahkan masukan Nim lain!");
+            try{
+                Integer.parseInt(stringNim);
+            }catch (NumberFormatException e){
+                System.out.println("Nim tidak valid silahkan masukan Nim lain");
+                tambahData();
+            }
+            int nim= Integer.parseInt(stringNim);
+
+           /* try{
+                int cek=input.nextInt();
+
+
+            }catch (Exception e){
+                System.out.println("Nim tidak valid silahkan masukan Nim lain");
+                tambahData();
+            }*/
+
+            if(jumlahData<=0){
+                System.out.print("Nama : ");
+                String nama=input.next();
+
+                mahasiswa[jumlahData]=new Mahasiswa();
+                mahasiswa[jumlahData].setNama(nama);
+                mahasiswa[jumlahData].setNIM(nim);
+                jumlahData++;
+                System.out.println("isi data lagi?");
+                konfirmasi=input.next();
+                if(konfirmasi.equalsIgnoreCase("n")){
+                    menu();
+                }
+            }
+            else if(jumlahData<=5){
+                Integer cekDuplikasi=linearNimSearch(nim);
+                if(cekDuplikasi!=null){
+                    System.out.println("Nim sudah Terdaftar silahkan masukan Nim yang berbeda!");
+                    tambahData();
                 }
                 else{
                     System.out.print("Nama : ");
@@ -38,79 +67,42 @@ public class Siakad {
                     mahasiswa[jumlahData].setNama(nama);
                     mahasiswa[jumlahData].setNIM(nim);
                     jumlahData++;
-                }
-                /*if(jumlahData<=0){
-                    System.out.print("Nama : ");
-                    String nama=input.next();
-
-                    mahasiswa[jumlahData]=new Mahasiswa();
-                    mahasiswa[jumlahData].setNama(nama);
-                    mahasiswa[jumlahData].setNIM(nim);
-                    jumlahData++;
-
-
-                }
-                else if(jumlahData<=5){
-                    Integer cekDuplikasi=linearNimSearch(nim);
-                    if(cekDuplikasi!=null){
-                        System.out.println("\nNim sudah Terdaftar !\n");
-
+                    System.out.println("isi data lagi?");
+                    konfirmasi=input.next();
+                    if(konfirmasi.equalsIgnoreCase("n")){
+                        menu();
                     }
-                    else{
-                        System.out.print("Nama : ");
-                        String nama=input.next();
-
-                        mahasiswa[jumlahData]=new Mahasiswa();
-                        mahasiswa[jumlahData].setNama(nama);
-                        mahasiswa[jumlahData].setNIM(nim);
-                        jumlahData++;
-
-
-                    }
-
                 }
-                else if(jumlahData>5){
-                    Integer cekHasil =binarySearch(mahasiswa,Integer.toString(nim),0,jumlahData-1);
-                    if(cekHasil!=null){
-                        System.out.println("Nim sudah Terdaftar silahkan masukan Nim yang berbeda!");
 
-                    }
-                    System.out.print("Nama : ");
-                    String nama=input.next();
-
-                    mahasiswa[jumlahData]=new Mahasiswa();
-                    mahasiswa[jumlahData].setNama(nama);
-                    mahasiswa[jumlahData].setNIM(nim);
-                    jumlahData++;
-
-
-                }*/
             }
-            else{
-                System.out.println("\nNim tidak valid !\n");
+            else if(jumlahData>5){
+                Integer cekHasil =binarySearch(mahasiswa,Integer.toString(nim),0,jumlahData-1);
+                if(cekHasil!=null){
+                    System.out.println("Nim sudah Terdaftar silahkan masukan Nim yang berbeda!");
+                    tambahData();
+                }
+                System.out.print("Nama : ");
+                String nama=input.next();
+
+                mahasiswa[jumlahData]=new Mahasiswa();
+                mahasiswa[jumlahData].setNama(nama);
+                mahasiswa[jumlahData].setNIM(nim);
+                jumlahData++;
+                System.out.println("isi data lagi?");
+                konfirmasi=input.next();
+                if(konfirmasi.equalsIgnoreCase("n")){
+                    menu();
+                }
+
+            }
+            else if(jumlahData<=2){
 
             }
 
 
-            System.out.println("isi data lagi?");
-            konfirmasi=input.next();
+        }while (true);
 
 
-
-        }
-
-
-    }
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
     }
     public static void lihatData(){
         System.out.println("Berikut data anda");
@@ -121,7 +113,7 @@ public class Siakad {
     }
 
     public void  cariData(){
-        Siakad siakad=new Siakad();
+        SiakadLoopProblem siakad=new SiakadLoopProblem();
         System.out.println("-----Cari Data------");
         System.out.println("1. Cari berdasarkan Nama (linear search)");
         System.out.println("2. Cari berdasarkan Nim (Binary Search)");
@@ -151,7 +143,7 @@ public class Siakad {
 
     public void urutkanData(){
         Siakad siakad=new Siakad();
-        System.out.println("\nPilih algoritma pengurutan");
+        System.out.println("Pilih algoritma pengurutan");
         System.out.println("1. EXCHANGE SORT");
         System.out.println("2. Selection Sort");
         System.out.println("3. Insertion Sort");
@@ -256,12 +248,14 @@ public class Siakad {
     public void InsertionSort(){
         for(int m=1;m<jumlahData;++m){
             Mahasiswa key=mahasiswa[m];
-           int l=m-1;
-           while (mahasiswa[l].getNim()> key.getNim() && l>0){
-               mahasiswa[l+1]=mahasiswa[l];
-               l=l-1;
-           }
-           mahasiswa[l+1]=key;
+            int l=m-1;
+            while (mahasiswa[l].getNim()> key.getNim() && l>0){
+                mahasiswa[l+1]=mahasiswa[l];
+                l=l-1;
+
+            }
+            mahasiswa[l+1]=key;
+
         }
         sorted=true;
 
@@ -350,11 +344,11 @@ public class Siakad {
     }
 
     public static Integer binarySearch(Mahasiswa []arr,String filterValue, int low, int high){
-        /*if(!sorted){
+        if(!sorted){
             quickSort(mahasiswa,0,jumlahData-1);
-        }*/
-        quickSort(mahasiswa,0,jumlahData-1);
+        }
         if (low>high){
+
             return null;
         }
 
@@ -369,42 +363,29 @@ public class Siakad {
 
             }
             else{
-               return binarySearch(mahasiswa,filterValue,low,mid-1);
+                return binarySearch(mahasiswa,filterValue,low,mid-1);
             }
         }
+
+
+
+
+
     }
     static void editNama(Mahasiswa mahasiswa){
         System.out.println("---Edit Nama---");
         System.out.println("Nim : "+mahasiswa.getNim());
         System.out.println("Nama : "+ mahasiswa.getNama());
-        System.out.println("Masukan nama baru : ");
-        String namaBaru= input.next();
-        mahasiswa.setNama(namaBaru);
-        System.out.println("Nama berhasil  diubah");
     }
-    static void editNim(Mahasiswa dataMhs){
+    static void editNim(Mahasiswa mahasiswa){
         System.out.println("---Edit Nim---");
-        System.out.println("Nim : "+dataMhs.getNim());
-        System.out.println("Nama : "+ dataMhs.getNama());
-        System.out.println("Masukan Nim baru : ");
-        String nimBaru= input.next();
-        if(isNumeric(nimBaru)){ //Menghindari Error dikarenakan input selain angka
-            if(binarySearch(mahasiswa,nimBaru,0,jumlahData-1)!=null){
-                System.out.println("Nim sudah terdaftar silahkan  masukan Nim lain");
-            }
-            else{
-                dataMhs.setNIM(Integer.parseInt(nimBaru));
-            }
-        }
-        else{
-            System.out.println("Nim tidak valid !");
-        }
-
+        System.out.println("Nim : "+mahasiswa.getNim());
+        System.out.println("Nama : "+ mahasiswa.getNama());
     }
     public static void editData(){
         System.out.println("-----Edit Data-----");
         System.out.println("Cari Data yang akan diubah ");
-        System.out.println("Masukan Nim :"); //Pencarian menggunakan Nim untuk menghindari duplikasi
+        System.out.println("Masukan Nim :");
         String filter= input.next();
         Integer toBeEdited=binarySearch(mahasiswa,filter,0,jumlahData-1);
 
@@ -435,39 +416,6 @@ public class Siakad {
 
 
 
-    }
-    public static void uas(){
-        if(jumlahData==0){ //O(1)
-            System.out.println("Tidak ada data");//O(1)
-
-        }
-        else{
-            int jarak=jumlahData; //O(1)
-            int susut=13;//O(1)
-            int urut=0;//O(1)
-            while(urut==0){ //O(n)
-                jarak=(jarak*10)/susut;
-                if(jarak<=1){
-                    jarak=1;
-                    urut=1;
-                }
-                for(int i=0;i+jarak<jumlahData;i++){ //O
-                    if(mahasiswa[i].getNim()>mahasiswa[i+jarak].getNim()){
-                        Mahasiswa temp;
-                        temp=mahasiswa[i];
-                        mahasiswa[i]=mahasiswa[i+jarak];
-                        mahasiswa[i+jarak]=temp;
-                        urut=0;
-                    }
-
-                }
-
-            }
-            System.out.println("Data telah diurutkan Silahkan tampilkan data");
-
-
-
-        }
     }
     public static void hapusData(Integer index){
         System.out.println("Nama : "+mahasiswa[index].getNama());
@@ -502,15 +450,12 @@ public class Siakad {
             Siakad siakad=new Siakad();
 
             //System.out.println("\n "+mahasiswa[3].getNim()+" "+ mahasiswa[3].getNama());
-            System.out.println("\nMenu Siakad");
+            System.out.println("Menu Siakad");
             System.out.println("1. Tambah Data ");
             System.out.println("2. Lihat Data ");
             System.out.println("3. Urutkan Data");
             System.out.println("4. Cari Data");
             System.out.println("5. Edit atau Hapus Data");
-            System.out.println("6. Uas");
-            System.out.println("7. Keluar");
-            System.out.println("Masukan pilihan : ");
             pilihanMenu=input.nextInt();
             switch (pilihanMenu){
                 case 1: {
@@ -534,8 +479,6 @@ public class Siakad {
                     break;
                 }
                 case 6:{
-                    uas();
-                    break;
 
                 }
 
@@ -543,7 +486,7 @@ public class Siakad {
 
 
 
-        }while (pilihanMenu!=7);
+        }while (pilihanMenu!=6);
     }
 
     public static void main(String[] args) {
